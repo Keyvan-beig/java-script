@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        var person = [
+            { name: 'ali', jender: 'male' },
+            { name: 'mamad', jender: 'male' },
+            { name: 'zahra', jender: 'female' },
+            { name: 'fatemeh', jender: 'female' }
+        ]
+
+        function isMale(param) {
+            return param === 'male'
+        }
+
+        var males = [];
+        var females = [];
+
+        function maleOrFmale(param) {
+
+            for (var x = 0; x < param.length; x++) {
+
+                if(isMale(param[x].jender)){
+
+                    males.push(param[x])
+
+                }else{
+
+                    females.push(param[x])
+
+                }
+            }
+
+        }
+
+        maleOrFmale(person)
+
+        console.log("male : " , males);
+        console.log("female : " , females);
+
+    </script>
+
+</body>
+
+</html>
