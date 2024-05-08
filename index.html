@@ -11,10 +11,10 @@
     <script>
 
         var person = [
-            { name: 'ali', jender: 'male' },
-            { name: 'mamad', jender: 'male' },
-            { name: 'zahra', jender: 'female' },
-            { name: 'fatemeh', jender: 'female' }
+            { name: 'ali', gender: 'male' },
+            { name: 'mamad', gender: 'male' },
+            { name: 'zahra', gender: 'female' },
+            { name: 'fatemeh', gender: 'female' }
         ]
 
         function isMale(param) {
@@ -28,7 +28,7 @@
 
             for (var x = 0; x < param.length; x++) {
 
-                if(isMale(param[x].jender)){
+                if(isMale(param[x].gender)){
                     males.push(param[x])
                 }else{
                     females.push(param[x])
