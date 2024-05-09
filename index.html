@@ -3,44 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-
     <title>Document</title>
 </head>
 
 <body>
+
+    <button id="btmm" onclick="evnt()">
+        <a href="https://www.google.com">click me!</a>
+    </button>
+
     <script>
 
-        var person = [
-            { name: 'ali', gender: 'male' },
-            { name: 'mamad', gender: 'male' },
-            { name: 'zahra', gender: 'female' },
-            { name: 'fatemeh', gender: 'female' }
-        ]
-
-        function isMale(param) {
-            return param === 'male'
+        function evnt(){
+            document.querySelector("#btmm > a").href = "#"
         }
-
-        var males = [];
-        var females = [];
-
-        function maleOrFmale(param) {
-
-            for (var x = 0; x < param.length; x++) {
-
-                if(isMale(param[x].gender)){
-                    males.push(param[x])
-                }else{
-                    females.push(param[x])
-                }
-            }
-
-        }
-
-        maleOrFmale(person)
-
-        console.log("male : " , males);
-        console.log("female : " , females);
 
     </script>
 
