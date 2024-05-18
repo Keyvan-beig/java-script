@@ -16,7 +16,7 @@
     }
 
     .acc-text{
-        animation: animate-close 1s forwards;
+        animation: animate-close 0.5s forwards;
         border: solid 1px;
         overflow-y: hidden;
     }
@@ -35,7 +35,10 @@
 .d-block {
     .acc-text{
         display: block !important;
-        animation: animate 1s forwards ease-in-out;
+        animation: animate 0.5s forwards ease-in-out;
+    }
+    p{
+        animation: textEnter 0.5s forwards;
     }
 }
 
@@ -55,5 +58,15 @@
     }
     to{
      height: 0;
+    }
+ }
+
+ @keyframes textEnter {
+    from{
+        opacity: 0;
+        transform: scaleY(0);
+    }to{
+        transform: scaleY(100%);
+        opacity: 100%;
     }
  }
