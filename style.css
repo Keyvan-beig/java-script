@@ -16,17 +16,13 @@
     }
 
     .acc-text{
-        /* display: none; */
         animation: animate-close 1s forwards;
-        
+        border: solid 1px;
+        overflow-y: hidden;
     }
 
     p {
-        margin: 0;
-        /* padding: 10px; */
-        border: solid 1px;
-        animation: animate-close 1s forwards ease-in-out;
-        overflow-y: hidden;
+        margin: 10px;
     }
 }
 
@@ -41,15 +37,6 @@
         display: block !important;
         animation: animate 1s forwards ease-in-out;
     }
-
-    p {
-        margin: 0;
-        padding: 10px;
-        border: solid 1px;
-        animation: animate 1s forwards ease-in-out;
-        overflow-y: hidden;
-    }
-
 }
 
 @keyframes animate {
