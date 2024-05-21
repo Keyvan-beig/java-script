@@ -1,14 +1,13 @@
 const list = document.getElementById("listName");
-const buttm = document.getElementById("buttm");
 const deleteAllButton = document.getElementById("deleteAll");
+const filterDiv = document.querySelectorAll(".filter button");
 let olTag = document.querySelector(".lists ol");
 
+list.addEventListener("keyup",addList)
 
-buttm.addEventListener("click", addList);
+function addList(e) {
 
-function addList() {
-
-    if (list.value) {
+    if (list.value && e.key === "Enter") {
 
         let div_1 = document.createElement("div");
 
@@ -61,6 +60,12 @@ PendingButtm.addEventListener("click",showPending)
 
 function showPending(){
 
+    filterDiv.forEach((_item)=>{
+        _item.style.color = "black";
+    })
+
+    PendingButtm.style.color = "blue";
+
     let ol = document.querySelectorAll(".lists ol li");
 
     ol.forEach((_item)=>{
@@ -85,6 +90,12 @@ completedButtm.addEventListener("click",showCompleted)
 
 function showCompleted(){
 
+    filterDiv.forEach((_item)=>{
+        _item.style.color = "black";
+    })
+
+    completedButtm.style.color = "blue";
+
     let ol = document.querySelectorAll(".lists ol li");
 
     ol.forEach((_item)=>{
@@ -107,6 +118,12 @@ all.addEventListener("click",showAll)
 
 function showAll(){
 
+    filterDiv.forEach((_item)=>{
+        _item.style.color = "black";
+    })
+
+    all.style.color = "blue";
+
     let ol = document.querySelectorAll(".lists ol li");
 
     ol.forEach((_item)=>{
@@ -121,8 +138,6 @@ function showAll(){
 function overLine() {
 
     let ol = document.querySelectorAll(".lists ol li");
-
-    console.log(ol);
 
     ol.forEach((_item)=>{
 
