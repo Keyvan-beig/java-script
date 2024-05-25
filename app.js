@@ -1,21 +1,26 @@
-const list = document.getElementById("listName");
+const taskName = document.getElementById("taskName");
 const deleteAllButton = document.getElementById("deleteAll");
-const filterDiv = document.querySelectorAll(".filter button");
-let olTag = document.querySelector(".lists ol");
+const filterButton = document.querySelectorAll(".filter button");
+const olTag = document.querySelector(".task-list ol");
+let showAllButton = document.getElementById("all");
+let PendingButtm = document.getElementById("Pending");
+let completedButtm = document.getElementById("completed");
 
-list.addEventListener("keyup",addList)
+taskName.addEventListener("keyup", addNewTask)
 
-function addList(e) {
+function addNewTask(e) {
 
-    if (list.value && e.key === "Enter") {
+    if (taskName.value && e.key === "Enter") {
 
         let div_1 = document.createElement("div");
 
         let div_2 = document.createElement("div");
 
-        let input = document.createElement("input");
+        div_2.classList.add("dialog-box");
 
-        input.setAttribute("type","checkbox")
+        let inputCheckBox = document.createElement("input");
+
+        inputCheckBox.type = "checkbox";
 
         let liTag = document.createElement("li");
 
@@ -23,23 +28,84 @@ function addList(e) {
 
         deleteButton.innerText = "Clear"
 
-        deleteButton.addEventListener("click",deleteItem)
-
-        function deleteItem() {
-        
-            olTag.removeChild(liTag)
-           
-        }
-
         let pTag = document.createElement("p")
 
-        pTag.innerText = list.value;
+        pTag.textContent = taskName.value;
 
-        div_1.appendChild(input);
+        deleteButton.addEventListener("click", () => olTag.removeChild(liTag));
+
+        let editeButton = document.createElement("button");
+
+        editeButton.innerText = "Edite";
+
+        editeButton.addEventListener("click", () => {
+
+            taskName.value = pTag.innerText;
+
+            taskName.removeEventListener("keyup", addNewTask);
+
+            taskName.addEventListener("keyup", editeTask);
+
+            function editeTask(e) {
+
+                if (e.key === "Enter" && taskName.value) {
+
+                    pTag.innerText = taskName.value
+
+                    taskName.removeEventListener("keyup", editeTask);
+
+                    taskName.addEventListener("keyup", addNewTask);
+
+                    taskName.value = "";
+
+                }
+            }
+        })
+
+        let divButtons = document.createElement("div");
+
+        divButtons.classList.add("disp-none");
+
+        let pDialog = document.createElement("p");
+
+        pDialog.innerText = "..."
+
+        pDialog.addEventListener("click", () => {
+
+            let dialogsDiv = document.querySelectorAll(".dialog-box div");
+
+            let checkOpen = divButtons.classList.contains("disp-none")
+
+            dialogsDiv.forEach((_item) => {
+
+                _item.classList.add("disp-none")
+
+            })
+
+            if (checkOpen) {
+
+                divButtons.classList.remove("disp-none")
+
+            }
+        })
+
+        divButtons.addEventListener("mouseleave", () => {
+
+            divButtons.classList.add("disp-none")
+
+        })
+
+        divButtons.appendChild(deleteButton);
+
+        divButtons.appendChild(editeButton);
+
+        div_1.appendChild(inputCheckBox);
 
         div_1.appendChild(pTag);
 
-        div_2.appendChild(deleteButton);
+        div_2.appendChild(divButtons);
+
+        div_2.appendChild(pDialog)
 
         liTag.appendChild(div_1);
 
@@ -47,120 +113,92 @@ function addList(e) {
 
         olTag.appendChild(liTag);
 
-        list.value = ""
+        taskName.value = ""
 
-        input.addEventListener("change",overLine)
+        inputCheckBox.addEventListener("change", () => {
+            if (inputCheckBox.checked) {
 
+                pTag.style.textDecoration = "line-through"
+
+            } else {
+
+                pTag.style.textDecoration = ""
+
+            }
+        })
     }
 }
 
-let PendingButtm = document.getElementById("Pending");
+PendingButtm.addEventListener("click", () => {
 
-PendingButtm.addEventListener("click",showPending)
-
-function showPending(){
-
-    filterDiv.forEach((_item)=>{
+    //change color selected button//
+    filterButton.forEach((_item) => {
         _item.style.color = "black";
     })
 
     PendingButtm.style.color = "blue";
 
-    let ol = document.querySelectorAll(".lists ol li");
+    //show pending tasks//
+    let all_li = document.querySelectorAll(".task-list ol li");
 
-    ol.forEach((_item)=>{
+    all_li.forEach((_item) => {
 
-        let isPending = _item.getElementsByTagName("input")[0].checked;
+        let isCheck = _item.getElementsByTagName("input")[0].checked;
 
-        if(isPending){
+        if (isCheck) {
             _item.style.display = "none"
-        }else{
+        } else {
             _item.style.display = "flex"
         }
 
     })
 
-}
+})
 
+completedButtm.addEventListener("click", () => {
 
-let completedButtm = document.getElementById("completed");
-
-completedButtm.addEventListener("click",showCompleted)
-
-
-function showCompleted(){
-
-    filterDiv.forEach((_item)=>{
+    //change color selected button//
+    filterButton.forEach((_item) => {
         _item.style.color = "black";
     })
 
     completedButtm.style.color = "blue";
 
-    let ol = document.querySelectorAll(".lists ol li");
+    //show completed tasks//
+    let all_li = document.querySelectorAll(".task-list ol li");
 
-    ol.forEach((_item)=>{
+    all_li.forEach((_item) => {
 
-        let isCompleted = _item.getElementsByTagName("input")[0].checked;
+        let isCheck = _item.getElementsByTagName("input")[0].checked;
 
-        if(isCompleted){
+        if (isCheck) {
             _item.style.display = "flex"
-        }else{
+        } else {
             _item.style.display = "none"
         }
 
     })
 
-}
+})
 
-let all = document.getElementById("all");
+showAllButton.addEventListener("click", () => {
 
-all.addEventListener("click",showAll)
-
-function showAll(){
-
-    filterDiv.forEach((_item)=>{
+    filterButton.forEach((_item) => {
         _item.style.color = "black";
     })
 
     all.style.color = "blue";
 
-    let ol = document.querySelectorAll(".lists ol li");
+    let all_li = document.querySelectorAll(".task-list ol li");
 
-    ol.forEach((_item)=>{
+    all_li.forEach((_item) => {
 
         _item.style.display = "flex";
     })
 
-}
+})
 
-
-
-function overLine() {
-
-    let ol = document.querySelectorAll(".lists ol li");
-
-    ol.forEach((_item)=>{
-
-        let isCheck = _item.getElementsByTagName("input")[0].checked;
-
-        let pTag = _item.getElementsByTagName("p")[0];
-
-        if(isCheck){
-            pTag.style.textDecoration = "line-through"
-        }else{
-            pTag.style.textDecoration = "blink"
-        }
-
-    })
-
-}
-
-deleteAllButton.addEventListener("click",deleteAll);
-
-function deleteAll(){
-
-    olTag.innerHTML = ''
-}
+deleteAllButton.addEventListener("click", () => olTag.innerHTML = '');
 
 
 

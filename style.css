@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 body {
     margin: 0;
     box-sizing: border-box;
@@ -13,20 +16,29 @@ body {
 
 .container {
     width: 30%;
+    min-width: 350px;
     min-height: 200px;
     box-shadow: 0 0 5px;
     border-radius: 10px;
     background-color: white;
+    transition: height 1s ease-in-out;
 }
 
-.inputs {
+ol {
+    margin: 0;
 
+    :first-child{
+        border: unset !important;
+    }
+}
+
+.input {
     display: flex;
     justify-content: space-between;
     padding: 20px;
 
     input[type="text"] {
-        padding: 10px ;
+        padding: 10px;
         text-align: center;
         width: 100%;
         border-radius: 10px;
@@ -38,57 +50,115 @@ body {
         cursor: pointer;
     }
 
-    
+
 
 }
 
 
-.lists li{
+.task-list li {
     list-style-type: none;
     display: flex;
     justify-content: space-between;
-    padding-right: 10%;
+    border-top: solid 1px gray;
+    margin: 0 15% 0 0px;
 
-
-    div{
+    >div {
         display: flex;
         align-items: center;
-        
-        button{
+
+        button {
             height: 20px;
+            margin: 5px;
 
         }
     }
 
-    
+
 
 }
 
-.filter{
+.filter {
     display: flex;
     justify-content: space-evenly;
     border-bottom: solid 2px gray;
     padding-bottom: 15px;
 }
 
-#all, #Pending, #completed{
+#all,
+#Pending,
+#completed {
     background-color: unset;
     border: unset;
     cursor: pointer;
     font-size: 16px;
 }
 
-#all{
+#all {
 
     color: blue;
 
 }
 
-#deleteAll{
+#deleteAll {
     border: unset;
     background-color: blue;
     color: white !important;
     padding: 10px;
     border-radius: 5px;
     font-size: 12px;
+}
+
+.dialog-box {
+    position: relative;
+
+}
+
+.dialog-box>p {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+.dialog-box>div {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    box-shadow: 0 0 5px black;
+    background-color: white;
+    border-radius: 10px;
+    top: 65%;
+    left: 100%;
+    animation: dialog 0.4s ease-in-out;
+    overflow: hidden;
+
+
+    button {
+        background-color: unset;
+        border: unset;
+        cursor: pointer;
+    }
+
+    button:hover {
+        color: blue !important;
+    }
+
+}
+
+.disp-none {
+    display: none;
+}
+
+@keyframes dialog {
+    from {
+        height: 0;
+        width: 0;
+        opacity: 0;
+    }
+
+    to {
+        height: 60px;
+        width: 60px;
+        opacity: 100%;
+    }
 }
