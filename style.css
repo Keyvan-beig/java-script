@@ -93,12 +93,6 @@ ol {
     font-size: 16px;
 }
 
-#all {
-
-    color: blue;
-
-}
-
 #deleteAll {
     border: unset;
     background-color: blue;
@@ -161,4 +155,8 @@ ol {
         width: 60px;
         opacity: 100%;
     }
+}
+
+.select{
+    color: blue;
 }

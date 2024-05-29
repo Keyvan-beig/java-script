@@ -1,28 +1,35 @@
-let taskName = document.getElementById("taskName");
-let olList = document.querySelector(".task-list > ol")
+const inputValue = document.getElementById("taskName");
+const olList = document.querySelector(".task-list > ol");
+const filterItem = document.querySelectorAll(".filter_item");
+const deleteAllButton = document.getElementById("deleteAll");
 
-let taskList = [];
+const addToStorage = (item) => {
 
-const listAdd = (arrayName , taskName) => {
-
-    const task = {
-        name: taskName,
-        type: "pending"
-    }
-
-    arrayName.push(task)
+    const _json = JSON.stringify(item);
+    localStorage.setItem("taskList", _json)
 
 }
 
-function showTask(_item,isCheck) {
+let taskList = localStorage.getItem("taskList");
+
+taskList = taskList ? JSON.parse(taskList) : [];
+
+const listAdd = (arrayName, taskName) => {
+
+    const task = { name: taskName, type: "Pending" }
+
+    arrayName.push(task)
+}
+
+function FormatTask(listName, taskName, isCheck, id) {
 
     const inputElement = document.createElement("input");
     inputElement.type = "checkbox";
-    inputElement.checked = isCheck === "compeleted" ? "checked" : ""
-
+    inputElement.checked = isCheck === "Completed" ? "checked" : ""
 
     const pElement = document.createElement("p");
-    pElement.textContent = _item;
+    pElement.textContent = taskName.trim()
+    pElement.style.textDecoration = isCheck === "Completed" ? "line-through" : ""
 
     const div_1 = document.createElement("div");
 
@@ -36,6 +43,7 @@ function showTask(_item,isCheck) {
     editeButton.textContent = "Edite";
 
     const divButtons = document.createElement("div");
+    divButtons.classList.add("disp-none");
 
     divButtons.appendChild(deleteButton);
     divButtons.appendChild(editeButton);
@@ -44,24 +52,117 @@ function showTask(_item,isCheck) {
     pTag.textContent = "...";
 
     const div_2 = document.createElement("div");
+    div_2.classList.add("dialog-box");
 
     div_2.appendChild(pTag);
     div_2.appendChild(divButtons);
 
     const liTag = document.createElement("li");
+    liTag.id = id
 
     liTag.appendChild(div_1);
     liTag.appendChild(div_2);
 
     olList.appendChild(liTag);
 
+    deleteButton.addEventListener("click", () => {
+
+        listName.splice(parseInt(liTag.id), 1);
+
+        olList.removeChild(liTag);
+
+        olList.innerHTML = ""
+
+        showTasksList(listName)
+
+        addToStorage(listName)
+    });
+
+    editeButton.addEventListener("click", () => {
+
+        inputValue.value = pElement.innerText;
+
+        inputValue.removeEventListener("keyup", addTask);
+
+        inputValue.addEventListener("keyup", editeTask);
+
+        function editeTask(e) {
+
+            if (e.key === "Enter" && inputValue.value) {
+
+                pElement.innerText = inputValue.value
+
+                inputValue.removeEventListener("keyup", editeTask);
+
+                inputValue.addEventListener("keyup", addTask);
+
+                listName[liTag.id].name = inputValue.value.trim()
+
+                inputValue.value = "";
+
+                addToStorage(listName)
+
+            }
+        }
+    })
+
+    inputElement.addEventListener("change", () => {
+
+        if (inputElement.checked) {
+
+            listName[liTag.id].type = "Completed";
+            pElement.style.textDecoration = "line-through";
+
+        } else {
+
+            listName[liTag.id].type = "Pending";
+            pElement.style.textDecoration = "";
+
+        }
+
+        addToStorage(listName)
+    })
+
+    pTag.addEventListener("click", () => {
+
+        const dialogDivs = olList.querySelectorAll(".dialog-box > div");
+        const checkIsOpen = divButtons.classList.contains("disp-none");
+
+        dialogDivs.forEach((item) => {
+            item.classList.add("disp-none")
+        })
+
+        if (checkIsOpen) {
+            divButtons.classList.remove("disp-none")
+        } else {
+            divButtons.classList.add("disp-none")
+        }
+    })
+
 }
 
-function showTasksList(item){
+function showTasksList(listName) {
 
-    item.forEach((_item)=>{
+    let itemType;
 
-        showTask(_item.name,_item.type)
+    listName.forEach((_item, id) => {
+
+        filterItem.forEach((item) => {
+
+            if (item.classList.contains("select")) {
+
+                itemType = item.textContent;
+            }
+        })
+
+        if (itemType === "All") {
+
+            FormatTask(taskList, _item.name, _item.type, id)
+        }
+        else if (_item.type === itemType) {
+
+            FormatTask(taskList, _item.name, _item.type, id)
+        }
 
     })
 
@@ -69,18 +170,50 @@ function showTasksList(item){
 
 showTasksList(taskList)
 
-taskName.addEventListener("keyup", addTask);
+inputValue.addEventListener("keyup", addTask);
 
 function addTask(e) {
-    if (e.key == "Enter" && taskName.value) {
+    if (e.key == "Enter" && inputValue.value) {
 
-        listAdd(taskList , taskName.value)
+        listAdd(taskList, inputValue.value.trim());
 
-        showTask(taskName.value,"pending")
+        olList.innerHTML = ""
+
+        showTasksList(taskList)
+
+        inputValue.value = ""
+
+        addToStorage(taskList);
 
     }
-
 }
 
+filterItem.forEach((_item) => {
 
+    _item.addEventListener("click", () => {
 
+        filterItem.forEach((item) => {
+
+            item.classList.remove("select");
+
+        })
+
+        _item.classList.add("select");
+
+        olList.innerHTML = ""
+
+        showTasksList(taskList)
+
+    })
+
+})
+
+deleteAllButton.addEventListener("click", () => {
+
+    olList.innerHTML = ''
+
+    taskList.splice(0, taskList.length)
+
+    addToStorage(taskList)
+
+});
