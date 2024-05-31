@@ -86,6 +86,8 @@ function FormatTask(listName, taskName, isCheck, id) {
 
         inputValue.addEventListener("keyup", editeTask);
 
+        inputValue.focus();
+
         function editeTask(e) {
 
             if (e.key === "Enter" && inputValue.value) {
