@@ -1,19 +1,28 @@
+const headingDiv = document.querySelectorAll(".heading");
+const dialogDivs = document.querySelectorAll(".heading div");
 
-const accordion = document.querySelectorAll(".heading");
+headingDiv.forEach((item)=>{
 
-accordion.forEach((_item) => {
+    const h5Tag = item.querySelector("h5")
+    const dialogDiv = item.querySelector("div")
 
-    _item.addEventListener("click", () => {
+    h5Tag.addEventListener("click",()=>{
 
-        _item.classList.remove('d-none')
-
-        accordion.forEach((_item1)=>{
-
-            _item1.classList.remove('d-block')
-            
+        const isActive = dialogDiv.classList.contains("dis_block")
+        
+        dialogDivs.forEach((_item)=>{
+            _item.classList.remove("dis_block");
+        
         })
 
-        _item.classList.toggle('d-block')
+        if(isActive){
 
+            dialogDiv.classList.remove("dis_block")
+
+        }else{
+
+            dialogDiv.classList.add("dis_block")
+
+        }
     })
-});
+})

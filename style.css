@@ -15,58 +15,45 @@
         margin: 0;
     }
 
-    .acc-text{
+    .acc-text {
         animation: animate-close 0.5s forwards;
-        border: solid 1px;
+        border-left: solid 1px;
+        border-right: solid 1px;
         overflow-y: hidden;
+        display: none;
     }
-
     p {
         margin: 10px;
     }
 }
 
-.d-none{
-    .acc-text{
-        display: none;
-    }   
-}
-
-.d-block {
-    .acc-text{
-        display: block !important;
-        animation: animate 0.5s forwards ease-in-out;
-    }
-    p{
-        animation: textEnter 0.5s forwards;
-    }
+.dis_block{
+    display: block !important;
+    animation: animate 0.5s forwards ease-in-out !important;
+    border: solid 1px;
 }
 
 @keyframes animate {
-   from{
-    height: 0;
-   }
-   to{
-    height: 100px;
-   }
-   
+    from {
+        height: 0;
+        display: none;
+    }
+
+    to {
+        height: 100px;
+        display: block;
+    }
+
 }
 
 @keyframes animate-close {
-    from{
-     height: 100px;
+    from {
+        height: 100px;
+        display: block;
     }
-    to{
-     height: 0;
-    }
- }
 
- @keyframes textEnter {
-    from{
-        opacity: 0;
-        transform: scaleY(0);
-    }to{
-        transform: scaleY(100%);
-        opacity: 100%;
+    to {
+        height: 0;
+        display: none;
     }
- }
+}
