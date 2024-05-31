@@ -140,13 +140,15 @@ function FormatTask(listName, taskName, isCheck, id) {
             divButtons.classList.add("disp-none")
         }
     })
-
+    
 }
 
 function showTasksList(listName) {
 
     let itemType;
 
+    olList.innerHTML = taskList.length === 0 ? "<p>no tasks</p>" : ""
+    
     listName.forEach((_item, id) => {
 
         filterItem.forEach((item) => {
@@ -215,6 +217,8 @@ deleteAllButton.addEventListener("click", () => {
     olList.innerHTML = ''
 
     taskList.splice(0, taskList.length)
+
+    olList.innerHTML = "<p>no tasks</p>"
 
     addToStorage(taskList)
 

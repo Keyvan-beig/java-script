@@ -111,6 +111,7 @@ ol {
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
+    position: relative;
 
 }
 
