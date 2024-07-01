@@ -1,10 +1,12 @@
 import { Bird, Reptiles } from "./script.js"
+import alrt from "./alrt.js";
 
 const animalName = document.getElementById("name");
 const type = document.getElementById("animals-type");
 const btn = document.getElementById("add-animals");
 const listItem = document.getElementById("list");
 const ageSpan = document.getElementById("age-span");
+const alrt_show = document.getElementById("alrt-show");
 
 let animals_list = JSON.parse(localStorage.getItem("animals"))
 
@@ -43,6 +45,12 @@ function addNew() {
    const setStorag = JSON.stringify(animals_list)
 
    localStorage.setItem("animals", setStorag)
+
+   alrt(alrt_show)
+
+   animalName.value = ""
+   
+   ageSpan.value = ""
 
    show_animals_fun()
 
